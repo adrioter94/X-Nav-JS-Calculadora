@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+   <head>
+     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+     <title>Simple calculator</title>
+	 <style type="text/css">
+		#display{ width: 90%;
+			width: 104px;
+			height: 30px;
+			border: 1px solid black;
+			text-align: right;
+			line-height: 30px;
+		}
+	 </style>
+     <script type="text/javascript" charset="utf-8">
+	 
+		var sumado = false;
+		function createValue(value, str){
+			var aux;
+			if((value == '' || sumado)&& (str == '1' || str == '0')){
+				aux = str;
+				sumado = false;
+			}else if(value == '' && (str == '+' || str == '=')){
+				alert("ERROR: invalid button");
+				aux = '';
+				
+			}else if(value == '1' || value == '0'){
+				if(str == '+'){
+					value = value + '+';
+					aux = value;
+				}else{
+					alert("ERROR: invalid button");
+					aux = value;
+				}
+				
+			}else if(value == '1+' || value == '0+'){
+				if(str == '1' || str == '0'){
+					value = value + str;
+					aux = value;
+				}else{
+					alert("ERROR: invalid button");
+					aux = value;
+				}
+				
+			}else{
+				if(str == '=' && !sumado){
+					if(value == '1+1'){
+						aux = value + '=0';
+						sumado = true;
+					}else if(value == '1+0'){
+						aux = value + '=1';
+						sumado = true;
+					}else if(value == '0+1'){
+						aux = value + '=1';
+						sumado = true;
+					}else if(value == '0+0'){
+						aux = value + '=0';
+						sumado = true;
+					}
+				}else{
+					alert("ERROR: invalid button");	
+					aux = value;
+				}
+				
+			}
+				
+			return aux;
+		}
+		function clickOne(id){
+			var element = document.getElementById(id);
+			var newValue = createValue(element.innerHTML, '1');
+			element.innerHTML = newValue;
+		}
+		
+		function clickZero(id){
+			var element = document.getElementById(id);
+			var newValue = createValue(element.innerHTML, '0');
+			element.innerHTML = newValue;
+		}
+		
+		function clickPlus(id){
+			var element = document.getElementById(id);
+			var newValue = createValue(element.innerHTML, '+');
+			element.innerHTML = newValue;
+		}
+		
+		function clickEqual(id){
+			var element = document.getElementById(id);
+			var newValue = createValue(element.innerHTML, '=');
+			element.innerHTML = newValue;
+		}
+
+     </script>
+   </head>
+   <body>
+	<div id='display'></div>
+	<div>
+	<button type="button" onclick="javascript:clickOne('display')">1</button>
+	<button type="button" onclick="javascript:clickZero('display')">0</button>
+	<button type="button" onclick="javascript:clickPlus('display')">+</button>
+	<button type="button" onclick="javascript:clickEqual('display')">=</button>
+	</div>
+   </body>
+</html>
